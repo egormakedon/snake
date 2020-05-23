@@ -1,4 +1,6 @@
-public class apple 
+package by.makedon.snake;
+
+public class apple
 {
 	public int posY;
 	public int posX;

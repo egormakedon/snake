@@ -1,16 +1,11 @@
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Graphics;
+package by.makedon.snake;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.Timer;
-import javax.swing.WindowConstants;
 
 public class SnakeGameMain extends JPanel implements ActionListener
 {

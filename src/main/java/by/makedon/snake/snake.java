@@ -1,4 +1,6 @@
-public class snake 
+package by.makedon.snake;
+
+public class snake
 {
 	public int length = 2;
 	public int direction = 1;
