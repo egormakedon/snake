@@ -1,4 +1,7 @@
-package by.makedon.snake;
+package by.makedon.snake.runner;
+
+import by.makedon.snake.domain.apple;
+import by.makedon.snake.domain.snake;
 
 import javax.swing.*;
 import java.awt.*;
