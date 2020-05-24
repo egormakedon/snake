@@ -4,9 +4,6 @@ import by.makedon.snake.runner.SnakeGameMain;
 
 public class snake
 {
-	public int length = 2;
-	public int direction = 1;
-	
 	public int sX[] = new int[SnakeGameMain.WIDTH*SnakeGameMain.HEIGTH];
 	public int sY[] = new int[SnakeGameMain.WIDTH*SnakeGameMain.HEIGTH];
 	
