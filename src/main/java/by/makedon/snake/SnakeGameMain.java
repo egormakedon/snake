@@ -11,19 +11,10 @@ import java.awt.event.KeyEvent;
 
 public class SnakeGameMain extends JPanel implements ActionListener
 {
-	public static final int SCALE = 32;
-	public static final int WIDTH = 20;
-	public static final int HEIGTH = 20;
 	public static int speed = 12;
 	
 	snake s = new snake(5,6,5,5);
 	apple a = new apple(Math.abs((int) (Math.random()*WIDTH-1)),Math.abs((int) (Math.random()*HEIGTH-1)));
-
-	public SnakeGameMain()
-	{
-		addKeyListener(new KeyBoard());
-		setFocusable(true);
-	}
 
 	@Override
 	public void paint(Graphics g)
@@ -100,19 +91,5 @@ public class SnakeGameMain extends JPanel implements ActionListener
 			}
 		}
 		repaint();
-	}	
-	
-	public class KeyBoard extends KeyAdapter
-	{
-		@Override
-		public void keyPressed (KeyEvent event)
-		{
-			int key = event.getKeyCode();
-			
-			if ((key==KeyEvent.VK_W) && (s.direction!=1)) s.direction=0;
-			if ((key==KeyEvent.VK_S) && (s.direction!=0)) s.direction=1;
-			if ((key==KeyEvent.VK_A) && (s.direction!=3)) s.direction=2;
-			if ((key==KeyEvent.VK_D) && (s.direction!=2)) s.direction=3;
-		}
 	}
 }
