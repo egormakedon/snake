@@ -11,7 +11,6 @@ import java.awt.event.KeyEvent;
 
 public class SnakeGameMain extends JPanel implements ActionListener
 {
-	public static JFrame jFrame;
 	public static final int SCALE = 32;
 	public static final int WIDTH = 20;
 	public static final int HEIGTH = 20;
@@ -19,15 +18,14 @@ public class SnakeGameMain extends JPanel implements ActionListener
 	
 	snake s = new snake(5,6,5,5);
 	apple a = new apple(Math.abs((int) (Math.random()*WIDTH-1)),Math.abs((int) (Math.random()*HEIGTH-1)));
-	Timer timer = new Timer(2000/speed,this);
-	
+
 	public SnakeGameMain()
 	{
-		timer.start();
 		addKeyListener(new KeyBoard());
 		setFocusable(true);
 	}
 
+	@Override
 	public void paint(Graphics g)
 	{
 		g.setColor(Color.black);
@@ -106,6 +104,7 @@ public class SnakeGameMain extends JPanel implements ActionListener
 	
 	public class KeyBoard extends KeyAdapter
 	{
+		@Override
 		public void keyPressed (KeyEvent event)
 		{
 			int key = event.getKeyCode();

@@ -1,6 +1,5 @@
 package by.makedon.snake.window;
 
-import by.makedon.snake.manager.DrawManager;
 import by.makedon.snake.util.Constants;
 import by.makedon.snake.util.ResourceUtil;
 
@@ -10,11 +9,9 @@ import java.awt.*;
 /**
  * @author Yahor Makedon
  */
-public class Window extends JFrame {
-    public Window() {
+public class GameWindow extends JFrame {
+    public GameWindow(int frameWidth, int frameHeight) {
         String frameName = ResourceUtil.getPropertyValue(Constants.FRAME_NAME);
-        int frameWidth = Integer.parseInt(ResourceUtil.getPropertyValue(Constants.FRAME_WIDTH));
-        int frameHeight = Integer.parseInt(ResourceUtil.getPropertyValue(Constants.FRAME_HEIGHT));
         int frameScale = Integer.parseInt(ResourceUtil.getPropertyValue(Constants.FRAME_SCALE));
 
         setTitle(frameName);
@@ -23,7 +20,7 @@ public class Window extends JFrame {
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        add(DrawManager.getInstance().getDrawPanel());
+        add(new DrawPanel());
     }
 
     public void showWindow() {

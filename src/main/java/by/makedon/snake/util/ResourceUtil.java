@@ -6,7 +6,7 @@ import java.util.Properties;
  * @author Yahor Makedon
  */
 public final class ResourceUtil {
-    private static Properties properties;
+    private static final Properties properties;
 
     static {
         properties = loadApplicationProperties();
