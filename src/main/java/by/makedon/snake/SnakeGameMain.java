@@ -1,6 +1,6 @@
-package by.makedon.snake.runner;
+package by.makedon.snake;
 
-import by.makedon.snake.domain.snake;
+import by.makedon.snake.snake;
 
 import javax.swing.*;
 import java.awt.*;
@@ -56,19 +56,6 @@ public class SnakeGameMain extends JPanel implements ActionListener
 		
 		g.setColor(Color.red);
 		g.fillOval(a.posX*SCALE+4,a.posY*SCALE+4,SCALE-8,SCALE-8);
-	}
-		
-	public static void main(String args[])
-	{
-		jFrame = new JFrame("Snake");
-		jFrame.setSize(WIDTH*SCALE+6,HEIGTH*SCALE+34);
-		
-		jFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-		jFrame.setResizable(false);
-		jFrame.setLocationRelativeTo(null);		
-		jFrame.add(new SnakeGameMain());
-		
-		jFrame.setVisible(true);	
 	}
 
 	@Override

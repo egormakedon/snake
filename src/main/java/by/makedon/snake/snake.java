@@ -1,6 +1,4 @@
-package by.makedon.snake.domain;
-
-import by.makedon.snake.runner.SnakeGameMain;
+package by.makedon.snake;
 
 public class snake
 {
