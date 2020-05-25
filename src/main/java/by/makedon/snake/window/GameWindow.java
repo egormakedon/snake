@@ -13,7 +13,6 @@ public class GameWindow extends JFrame {
     public GameWindow() {
         setTitle(ResourceUtil.getPropertyValue(Constants.FRAME_NAME));
         setResizable(false);
-        setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         add(new DrawPanel());
     }
@@ -21,6 +20,7 @@ public class GameWindow extends JFrame {
     @Override
     public void setSize(int frameWidth, int frameHeight) {
         super.setSize(frameWidth * GameWindowManager.FRAME_SCALE, frameHeight * GameWindowManager.FRAME_SCALE);
+        setLocationRelativeTo(null);
     }
 
     public void showWindow() {
