@@ -1,6 +1,8 @@
 package by.makedon.snake.runner;
 
-import by.makedon.snake.manager.WindowManager;
+import by.makedon.snake.manager.GameWindowManager;
+import by.makedon.snake.util.Constants;
+import by.makedon.snake.util.ResourceUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,7 +17,10 @@ public class ApplicationRunner {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             try {
-                WindowManager.getInstance().createAndShowGameWindow();
+                int width = Integer.parseInt(ResourceUtil.getPropertyValue(Constants.FRAME_DEFAULT_WIDTH));
+                int height = Integer.parseInt(ResourceUtil.getPropertyValue(Constants.FRAME_DEFAULT_HEIGHT));
+
+                GameWindowManager.getInstance().show(width, height);
             } catch (Exception e) {
                 logger.error(e.getLocalizedMessage(), e);
             }

@@ -4,22 +4,13 @@ package by.makedon.snake.domain;
  * @author Yahor Makedon
  */
 public class Apple {
-    private int x;
-    private int y;
+    private Pixel pixel;
 
-    public int getX() {
-        return x;
+    public Pixel getPixel() {
+        return pixel;
     }
 
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public void setY(int y) {
-        this.y = y;
+    public void setPixel(Pixel pixel) {
+        this.pixel = pixel;
     }
 }
