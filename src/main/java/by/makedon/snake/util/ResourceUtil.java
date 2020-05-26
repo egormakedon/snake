@@ -19,7 +19,7 @@ public final class ResourceUtil {
         String propertyValue = properties.getProperty(key);
 
         if (propertyValue == null) {
-            throw new NullPointerException("Property value should not be null");
+            throw new IllegalArgumentException(String.format("%s property not exists", key));
         } else {
             return propertyValue;
         }

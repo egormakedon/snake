@@ -3,6 +3,9 @@ package by.makedon.snake.manager;
 import by.makedon.snake.domain.Apple;
 import by.makedon.snake.domain.Pixel;
 import by.makedon.snake.domain.Snake;
+import by.makedon.snake.util.Constants;
+import by.makedon.snake.util.ResourceUtil;
+import by.makedon.snake.validator.Validator;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -13,7 +16,12 @@ import java.util.Optional;
  * @author Yahor Makedon
  */
 public final class GameDataManager {
+    private static final List<Pixel> snakeStartPositionPixelList;
     private static GameDataManager instance;
+
+    static {
+        snakeStartPositionPixelList = loadSnakeStartPosition();
+    }
 
     private List<Pixel> mapPixelList;
     private Snake snake;
@@ -42,6 +50,23 @@ public final class GameDataManager {
                 .findAny();
     }
 
+    private static List<Pixel> loadSnakeStartPosition() {
+        String snakeStartPosition = ResourceUtil.getPropertyValue(Constants.SNAKE_START_POSITION);
+        String[] snakeStartPositionArray = snakeStartPosition.split(Constants.VERTICAL_SLASH);
+
+        Validator.validateSnakeStartPosition(snakeStartPosition, snakeStartPositionArray);
+
+        List<Pixel> snakeStartPositionPixelList = new ArrayList<>(snakeStartPositionArray.length / 2);
+        for (int i = 0; i + 1 < snakeStartPositionArray.length; i+=2) {
+            int x = Integer.parseInt(snakeStartPositionArray[i]);
+            int y = Integer.parseInt(snakeStartPositionArray[i + 1]);
+
+            snakeStartPositionPixelList.add(new Pixel(x, y));
+        }
+
+        return snakeStartPositionPixelList;
+    }
+
     private void createMapPixelList(int width, int height) {
         mapPixelList = new ArrayList<>(width * height);
 
@@ -60,8 +85,7 @@ public final class GameDataManager {
         }
 
         List<Pixel> pixelList = new ArrayList<>(width * height);
-        pixelList.add(new Pixel(2, 1));
-        pixelList.add(new Pixel(1, 1));
+        pixelList.addAll(snakeStartPositionPixelList);
 
         snake.setPixelList(pixelList);
     }

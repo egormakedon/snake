@@ -11,10 +11,14 @@ public final class Constants {
     public static final String FRAME_DEFAULT_WIDTH = "frame.default.width";
     public static final String FRAME_DEFAULT_HEIGHT = "frame.default.height";
 
+    public static final String SNAKE_START_POSITION = "snake.startPosition";
+
     public static final int SNAKE_DIRECTION_UP = 0;
     public static final int SNAKE_DIRECTION_DOWN = 1;
     public static final int SNAKE_DIRECTION_LEFT = 2;
     public static final int SNAKE_DIRECTION_RIGHT = 3;
+
+    public static final String VERTICAL_SLASH = "\\|";
 
     private Constants() {
     }
