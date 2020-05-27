@@ -10,8 +10,8 @@ import java.util.List;
  */
 public final class Validator {
     public static void validateSnakeStartPosition(String snakeStartPosition, String[] snakeStartPositionArray) {
-        final String ERROR_MESSAGE_TEMPLATE = String
-                .format("%s=%s - %%s", Constants.SNAKE_START_POSITION, snakeStartPosition);
+        final String ERROR_MESSAGE_TEMPLATE =
+                getErrorMessageTemplate(Constants.SNAKE_START_POSITION, snakeStartPosition);
 
         if (snakeStartPositionArray.length < 4
                 || snakeStartPositionArray.length % 2 != 0) {
@@ -47,6 +47,23 @@ public final class Validator {
                         String.format(ERROR_MESSAGE_TEMPLATE, "Invalid snake coordinates configuration"));
             }
         }
+    }
+
+    public static void validateSnakeStartDirection(String snakeStartDirection) {
+        final String ERROR_MESSAGE_TEMPLATE =
+                getErrorMessageTemplate(Constants.SNAKE_START_POSITION, snakeStartDirection);
+
+        if (!(snakeStartDirection.equals(Constants.SNAKE_START_DIRECTION_U)
+                || snakeStartDirection.equals(Constants.SNAKE_START_DIRECTION_D)
+                || snakeStartDirection.equals(Constants.SNAKE_START_DIRECTION_L)
+                || snakeStartDirection.equals(Constants.SNAKE_START_DIRECTION_R))) {
+            throw new IllegalArgumentException(
+                    String.format(ERROR_MESSAGE_TEMPLATE, "Invalid direction: ('u' - up, 'd' - down, 'l' - left, 'r' - right)"));
+        }
+    }
+
+    private static String getErrorMessageTemplate(String propertyName, String propertyValue) {
+        return String.format("%s=%s - %%s", propertyName, propertyValue);
     }
 
     private Validator() {
