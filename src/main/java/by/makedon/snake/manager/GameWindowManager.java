@@ -13,8 +13,6 @@ public final class GameWindowManager {
     private static GameWindowManager instance;
 
     private GameWindow gameWindow;
-    private int width;
-    private int height;
 
     private GameWindowManager() {
     }
@@ -28,9 +26,6 @@ public final class GameWindowManager {
     }
 
     public void show(int width, int height) {
-        this.width = width;
-        this.height = height;
-
         if (gameWindow == null) {
             gameWindow = new GameWindow();
         }
@@ -41,13 +36,5 @@ public final class GameWindowManager {
 
     public void hide() {
         gameWindow.hideWindow();
-    }
-
-    public int getWidth() {
-        return width;
-    }
-
-    public int getHeight() {
-        return height;
     }
 }

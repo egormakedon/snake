@@ -51,7 +51,7 @@ public final class Validator {
 
     public static void validateSnakeStartDirection(String snakeStartDirection) {
         final String ERROR_MESSAGE_TEMPLATE =
-                getErrorMessageTemplate(Constants.SNAKE_START_POSITION, snakeStartDirection);
+                getErrorMessageTemplate(Constants.SNAKE_START_DIRECTION, snakeStartDirection);
 
         if (!(snakeStartDirection.equals(Constants.SNAKE_START_DIRECTION_U)
                 || snakeStartDirection.equals(Constants.SNAKE_START_DIRECTION_D)
