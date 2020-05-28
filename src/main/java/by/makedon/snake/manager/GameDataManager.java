@@ -14,9 +14,9 @@ import java.util.stream.Collectors;
  * @author Yahor Makedon
  */
 public final class GameDataManager {
-    public static final Integer KEY_FREE_PIXEL_LIST = 0;
-    public static final Integer KEY_SNAKE_PIXEL_LIST = 1;
-    public static final Integer KEY_APPLE_PIXEL_LIST = 2;
+    public static final Integer KEY_PIXEL_LIST_FREE = 0;
+    public static final Integer KEY_PIXEL_LIST_SNAKE = 1;
+    public static final Integer KEY_PIXEL_LIST_APPLE = 2;
 
     private static final List<Integer> snakeStartPositionCoordinateList;
     private static final int snakeStartDirection;
@@ -63,6 +63,25 @@ public final class GameDataManager {
         return gameMapPixelList.parallelStream()
                 .filter(pixel -> !snake.getPixelList().contains(pixel))
                 .findAny();
+    }
+
+    public void flushUpdatePixelMap() {
+        updatePixelMap.put(KEY_PIXEL_LIST_FREE, new ArrayList<>());
+        updatePixelMap.put(KEY_PIXEL_LIST_SNAKE, new ArrayList<>());
+        updatePixelMap.put(KEY_PIXEL_LIST_APPLE, new ArrayList<>(1));
+    }
+
+    public List<Pixel> getUpdatePixelList(int keyPixelList) {
+        if (!updatePixelMap.containsKey(keyPixelList)) {
+            throw new IllegalArgumentException(
+                    String.format("%s - %d", "Incorrect key for updatePixelMap", keyPixelList));
+        }
+
+        return updatePixelMap.get(keyPixelList);
+    }
+
+    public void updateSnakeDirection() {
+        currentSnakeDirection = newSnakeDirection;
     }
 
     public int getCurrentSnakeDirection() {
@@ -165,9 +184,9 @@ public final class GameDataManager {
         List<Pixel> snakePixelList = snake.getPixelList();
         List<Pixel> applePixelList = Collections.singletonList(apple.getPixel());
 
-        updatePixelMap.put(KEY_FREE_PIXEL_LIST, freePixelList);
-        updatePixelMap.put(KEY_SNAKE_PIXEL_LIST, snakePixelList);
-        updatePixelMap.put(KEY_APPLE_PIXEL_LIST, applePixelList);
+        updatePixelMap.put(KEY_PIXEL_LIST_FREE, freePixelList);
+        updatePixelMap.put(KEY_PIXEL_LIST_SNAKE, snakePixelList);
+        updatePixelMap.put(KEY_PIXEL_LIST_APPLE, applePixelList);
     }
 
     private void createSnakeDirection() {

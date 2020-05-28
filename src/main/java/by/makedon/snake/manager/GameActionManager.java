@@ -18,5 +18,11 @@ public final class GameActionManager {
     }
 
     public void start() {
+        GameWindowManager.getInstance().repaint();
+        GameDataManager.getInstance().flushUpdatePixelMap();
+
+        //TODO
+
+        GameDataManager.getInstance().updateSnakeDirection();
     }
 }

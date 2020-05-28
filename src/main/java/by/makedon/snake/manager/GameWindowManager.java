@@ -37,4 +37,8 @@ public final class GameWindowManager {
     public void hide() {
         gameWindow.hideWindow();
     }
+
+    public void repaint() {
+        gameWindow.repaint();
+    }
 }
