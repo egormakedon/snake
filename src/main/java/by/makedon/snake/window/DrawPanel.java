@@ -1,23 +1,22 @@
 package by.makedon.snake.window;
 
-import by.makedon.snake.domain.Apple;
-import by.makedon.snake.domain.Snake;
+import by.makedon.snake.manager.GameDataManager;
+import by.makedon.snake.util.Constants;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Yahor Makedon
  */
-public class DrawPanel extends JComponent implements ActionListener {
-    private Apple apple;
-    private Snake snake;
-
+public class DrawPanel extends JComponent {
     public DrawPanel() {
         setFocusable(true);
-//        addKeyListener(getKeyListener());
+        addKeyListener(new CustomKeyListener());
     }
 
     @Override
@@ -25,38 +24,44 @@ public class DrawPanel extends JComponent implements ActionListener {
         //TODO
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        //TODO
-    }
+    private static final class CustomKeyListener extends KeyAdapter {
+        private static final Map<Integer, Integer> map;
 
-//    private KeyListener getKeyListener() {
-//        return new KeyAdapter() {
-//            private final List<Integer> upDownDirectionList = Arrays.asList(Constants.DIRECTION_UP, Constants.DIRECTION_DOWN);
-//            private final List<Integer> leftRightDirectionList = Arrays.asList(Constants.DIRECTION_LEFT, Constants.DIRECTION_RIGHT);
-//            private final List<Integer> keyCodeUpList = Arrays.asList(KeyEvent.VK_W, KeyEvent.VK_UP);
-//            private final List<Integer> keyCodeDownList = Arrays.asList(KeyEvent.VK_S, KeyEvent.VK_DOWN);
-//            private final List<Integer> keyCodeLeftList = Arrays.asList(KeyEvent.VK_A, KeyEvent.VK_LEFT);
-//            private final List<Integer> keyCodeRightList = Arrays.asList(KeyEvent.VK_D, KeyEvent.VK_RIGHT);
-//
-//            @Override
-//            public void keyPressed(KeyEvent e) {
-//                int currentDirection = snake.getDirection();
-//                int keyCode = e.getKeyCode();
-//
-//                if (!upDownDirectionList.contains(currentDirection) && keyCodeUpList.contains(keyCode)) {
-//                    snake.setDirection(Constants.DIRECTION_UP);
-//                }
-//                if (!upDownDirectionList.contains(currentDirection) && keyCodeDownList.contains(keyCode)) {
-//                    snake.setDirection(Constants.DIRECTION_DOWN);
-//                }
-//                if (!leftRightDirectionList.contains(currentDirection) && keyCodeLeftList.contains(keyCode)) {
-//                    snake.setDirection(Constants.DIRECTION_LEFT);
-//                }
-//                if (!leftRightDirectionList.contains(currentDirection) && keyCodeRightList.contains(keyCode)) {
-//                    snake.setDirection(Constants.DIRECTION_RIGHT);
-//                }
-//            }
-//        };
-//    }
+        static {
+            map = new HashMap<>(8);
+
+            map.put(KeyEvent.VK_W, Constants.SNAKE_DIRECTION_UP);
+            map.put(KeyEvent.VK_UP, Constants.SNAKE_DIRECTION_UP);
+
+            map.put(KeyEvent.VK_S, Constants.SNAKE_DIRECTION_DOWN);
+            map.put(KeyEvent.VK_DOWN, Constants.SNAKE_DIRECTION_DOWN);
+
+            map.put(KeyEvent.VK_A, Constants.SNAKE_DIRECTION_LEFT);
+            map.put(KeyEvent.VK_LEFT, Constants.SNAKE_DIRECTION_LEFT);
+
+            map.put(KeyEvent.VK_D, Constants.SNAKE_DIRECTION_RIGHT);
+            map.put(KeyEvent.VK_RIGHT, Constants.SNAKE_DIRECTION_RIGHT);
+        }
+
+        private CustomKeyListener() {
+        }
+
+        @Override
+        public void keyPressed(KeyEvent e) {
+            int oldDirection = GameDataManager.getInstance().getCurrentSnakeDirection();
+            int newDirection = map.get(e.getKeyCode());
+
+            if (oldDirection != newDirection) {
+                if (newDirection == Constants.SNAKE_DIRECTION_UP && oldDirection != Constants.SNAKE_DIRECTION_DOWN) {
+                    GameDataManager.getInstance().setNewSnakeDirection(newDirection);
+                } else if (newDirection == Constants.SNAKE_DIRECTION_DOWN && oldDirection != Constants.SNAKE_DIRECTION_UP) {
+                    GameDataManager.getInstance().setNewSnakeDirection(newDirection);
+                } else if (newDirection == Constants.SNAKE_DIRECTION_LEFT && oldDirection != Constants.SNAKE_DIRECTION_RIGHT) {
+                    GameDataManager.getInstance().setNewSnakeDirection(newDirection);
+                } else if (newDirection == Constants.SNAKE_DIRECTION_RIGHT && oldDirection != Constants.SNAKE_DIRECTION_LEFT) {
+                    GameDataManager.getInstance().setNewSnakeDirection(newDirection);
+                }
+            }
+        }
+    }
 }

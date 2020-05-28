@@ -19,16 +19,20 @@ public final class GameDataManager {
     public static final Integer KEY_APPLE_PIXEL_LIST = 2;
 
     private static final List<Integer> snakeStartPositionCoordinateList;
+    private static final int snakeStartDirection;
     private static GameDataManager instance;
 
     static {
         snakeStartPositionCoordinateList = loadSnakeStartPosition();
+        snakeStartDirection = loadSnakeStartDirection();
     }
 
     private List<Pixel> gameMapPixelList;
     private Snake snake;
     private Apple apple;
     private Map<Integer, List<Pixel>> updatePixelMap;
+    private int currentSnakeDirection;
+    private int newSnakeDirection;
 
     private GameDataManager() {
     }
@@ -46,6 +50,7 @@ public final class GameDataManager {
         createSnake(width, height);
         createApple();
         createUpdatePixelMap();
+        createSnakeDirection();
     }
 
     public Optional<Pixel> getPixel(int x, int y) {
@@ -60,6 +65,14 @@ public final class GameDataManager {
                 .findAny();
     }
 
+    public int getCurrentSnakeDirection() {
+        return currentSnakeDirection;
+    }
+
+    public void setNewSnakeDirection(int newSnakeDirection) {
+        this.newSnakeDirection = newSnakeDirection;
+    }
+
     private static List<Integer> loadSnakeStartPosition() {
         String snakeStartPosition = ResourceUtil.getPropertyValue(Constants.SNAKE_START_POSITION);
         String[] snakeStartPositionArray = snakeStartPosition.split(Constants.VERTICAL_SLASH);
@@ -69,6 +82,30 @@ public final class GameDataManager {
         return Arrays.stream(snakeStartPositionArray)
                 .map(Integer::parseInt)
                 .collect(Collectors.toList());
+    }
+
+    private static int loadSnakeStartDirection() {
+        String snakeStartDirectionString = ResourceUtil.getPropertyValue(Constants.SNAKE_START_DIRECTION);
+
+        Validator.validateSnakeStartDirection(snakeStartDirectionString);
+
+        int snakeStartDirection = Integer.MIN_VALUE;
+        switch (snakeStartDirectionString) {
+            case Constants.SNAKE_START_DIRECTION_U:
+                snakeStartDirection = Constants.SNAKE_DIRECTION_UP;
+                break;
+            case Constants.SNAKE_START_DIRECTION_D:
+                snakeStartDirection = Constants.SNAKE_DIRECTION_DOWN;
+                break;
+            case Constants.SNAKE_START_DIRECTION_L:
+                snakeStartDirection = Constants.SNAKE_DIRECTION_LEFT;
+                break;
+            case Constants.SNAKE_START_DIRECTION_R:
+                snakeStartDirection = Constants.SNAKE_DIRECTION_RIGHT;
+                break;
+        }
+
+        return snakeStartDirection;
     }
 
     private void createGameMapPixelList(int width, int height) {
@@ -131,5 +168,10 @@ public final class GameDataManager {
         updatePixelMap.put(KEY_FREE_PIXEL_LIST, freePixelList);
         updatePixelMap.put(KEY_SNAKE_PIXEL_LIST, snakePixelList);
         updatePixelMap.put(KEY_APPLE_PIXEL_LIST, applePixelList);
+    }
+
+    private void createSnakeDirection() {
+        currentSnakeDirection = snakeStartDirection;
+        newSnakeDirection = snakeStartDirection;
     }
 }
