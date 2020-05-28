@@ -49,7 +49,7 @@ public class DrawPanel extends JComponent {
         @Override
         public void keyPressed(KeyEvent e) {
             int oldDirection = GameDataManager.getInstance().getCurrentSnakeDirection();
-            int newDirection = map.get(e.getKeyCode());
+            int newDirection = map.getOrDefault(e.getKeyCode(), oldDirection);
 
             if (oldDirection != newDirection) {
                 if (newDirection == Constants.SNAKE_DIRECTION_UP && oldDirection != Constants.SNAKE_DIRECTION_DOWN) {
