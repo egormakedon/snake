@@ -8,13 +8,15 @@ import java.util.Objects;
 public class Pixel {
     private int x;
     private int y;
+    private PixelType pixelType;
 
     public Pixel() {
     }
 
-    public Pixel(int x, int y) {
+    public Pixel(int x, int y, PixelType pixelType) {
         this.x = x;
         this.y = y;
+        this.pixelType = pixelType;
     }
 
     @Override
@@ -45,5 +47,13 @@ public class Pixel {
 
     public void setY(int y) {
         this.y = y;
+    }
+
+    public PixelType getPixelType() {
+        return pixelType;
+    }
+
+    public void setPixelType(PixelType pixelType) {
+        this.pixelType = pixelType;
     }
 }
