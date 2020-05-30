@@ -14,7 +14,6 @@ public class GameWindow extends JFrame {
         setTitle(ResourceUtil.getPropertyValue(Constants.FRAME_NAME));
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        add(new DrawPanel());
     }
 
     @Override

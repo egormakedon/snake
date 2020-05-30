@@ -24,7 +24,7 @@ public class ApplicationRunner {
 
                 GameDataManager.getInstance().createData(width, height);
                 GameWindowManager.getInstance().show(width, height);
-                GameActionManager.getInstance().start();
+                GameActionManager.getInstance().start(1_000);
             } catch (Exception e) {
                 logger.error(e.getLocalizedMessage(), e);
             }

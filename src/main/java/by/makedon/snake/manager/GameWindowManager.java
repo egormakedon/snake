@@ -2,6 +2,7 @@ package by.makedon.snake.manager;
 
 import by.makedon.snake.util.Constants;
 import by.makedon.snake.util.ResourceUtil;
+import by.makedon.snake.window.DrawPanel;
 import by.makedon.snake.window.GameWindow;
 
 /**
@@ -13,6 +14,7 @@ public final class GameWindowManager {
     private static GameWindowManager instance;
 
     private GameWindow gameWindow;
+    private DrawPanel drawPanel;
 
     private GameWindowManager() {
     }
@@ -26,12 +28,19 @@ public final class GameWindowManager {
     }
 
     public void show(int width, int height) {
+        if (drawPanel == null) {
+            drawPanel = new DrawPanel();
+        }
+
         if (gameWindow == null) {
             gameWindow = new GameWindow();
+            gameWindow.add(drawPanel);
         }
 
         gameWindow.setSize(width, height);
         gameWindow.showWindow();
+
+        repaint();
     }
 
     public void hide() {
@@ -39,6 +48,6 @@ public final class GameWindowManager {
     }
 
     public void repaint() {
-        gameWindow.repaint();
+        drawPanel.repaint();
     }
 }
