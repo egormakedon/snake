@@ -2,6 +2,7 @@ package by.makedon.snake.manager;
 
 import by.makedon.snake.domain.Apple;
 import by.makedon.snake.domain.Pixel;
+import by.makedon.snake.domain.PixelType;
 import by.makedon.snake.domain.Snake;
 import by.makedon.snake.util.Constants;
 import by.makedon.snake.util.ResourceUtil;
@@ -14,10 +15,6 @@ import java.util.stream.Collectors;
  * @author Yahor Makedon
  */
 public final class GameDataManager {
-    public static final Integer KEY_PIXEL_LIST_FREE = 0;
-    public static final Integer KEY_PIXEL_LIST_SNAKE = 1;
-    public static final Integer KEY_PIXEL_LIST_APPLE = 2;
-
     private static final List<Integer> snakeStartPositionCoordinateList;
     private static final int snakeStartDirection;
     private static GameDataManager instance;
@@ -30,7 +27,7 @@ public final class GameDataManager {
     private List<Pixel> gameMapPixelList;
     private Snake snake;
     private Apple apple;
-    private Map<Integer, List<Pixel>> updatePixelMap;
+    private List<Pixel> updatePixelList;
     private int currentSnakeDirection;
     private int newSnakeDirection;
 
@@ -49,7 +46,7 @@ public final class GameDataManager {
         createGameMapPixelList(width, height);
         createSnake(width, height);
         createApple();
-        createUpdatePixelMap();
+        createUpdatePixelList();
         createSnakeDirection();
     }
 
@@ -65,23 +62,16 @@ public final class GameDataManager {
                 .findAny();
     }
 
-    public void flushUpdatePixelMap() {
-        updatePixelMap.put(KEY_PIXEL_LIST_FREE, new ArrayList<>());
-        updatePixelMap.put(KEY_PIXEL_LIST_SNAKE, new ArrayList<>());
-        updatePixelMap.put(KEY_PIXEL_LIST_APPLE, new ArrayList<>(1));
-    }
-
-    public List<Pixel> getUpdatePixelList(int keyPixelList) {
-        if (!updatePixelMap.containsKey(keyPixelList)) {
-            throw new IllegalArgumentException(
-                    String.format("%s - %d", "Incorrect key for updatePixelMap", keyPixelList));
-        }
-
-        return updatePixelMap.get(keyPixelList);
+    public void flushUpdatePixelList() {
+        updatePixelList = new ArrayList<>();
     }
 
     public void updateSnakeDirection() {
         currentSnakeDirection = newSnakeDirection;
+    }
+
+    public List<Pixel> getUpdatePixelList() {
+        return updatePixelList;
     }
 
     public int getCurrentSnakeDirection() {
@@ -132,7 +122,7 @@ public final class GameDataManager {
 
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
-                gameMapPixelList.add(new Pixel(i, j));
+                gameMapPixelList.add(new Pixel(i, j, PixelType.FREE));
             }
         }
 
@@ -145,17 +135,22 @@ public final class GameDataManager {
         }
 
         List<Pixel> pixelList = new ArrayList<>(width * height);
-        for (int i = 0; i + 1 < snakeStartPositionCoordinateList.size(); i+=2) {
+
+        for (int i = 0; i + 1 < snakeStartPositionCoordinateList.size(); i += 2) {
             int x = snakeStartPositionCoordinateList.get(i);
             int y = snakeStartPositionCoordinateList.get(i + 1);
-
             Optional<Pixel> optionalPixel = getPixel(x, y);
+
             if (optionalPixel.isPresent()) {
-                pixelList.add(optionalPixel.get());
+                Pixel pixel = optionalPixel.get();
+                pixel.setPixelType(PixelType.SNAKE_BODY);
+                pixelList.add(pixel);
             } else {
                 throw new IllegalArgumentException("Snake start position doesn't match to the window size");
             }
         }
+
+        pixelList.get(0).setPixelType(PixelType.SNAKE_HEAD);
 
         snake.setPixelList(pixelList);
     }
@@ -166,27 +161,18 @@ public final class GameDataManager {
         }
 
         Optional<Pixel> optionalPixel = getFreePixel();
+
         if (optionalPixel.isPresent()) {
-            apple.setPixel(optionalPixel.get());
+            Pixel pixel = optionalPixel.get();
+            pixel.setPixelType(PixelType.APPLE);
+            apple.setPixel(pixel);
         } else {
             throw new IllegalArgumentException("Snake start position occupy full window size");
         }
     }
 
-    private void createUpdatePixelMap() {
-        if (updatePixelMap == null) {
-            updatePixelMap = new HashMap<>(3);
-        }
-
-        List<Pixel> freePixelList = gameMapPixelList.parallelStream()
-                .filter(pixel -> !snake.getPixelList().contains(pixel) && !apple.getPixel().equals(pixel))
-                .collect(Collectors.toList());
-        List<Pixel> snakePixelList = snake.getPixelList();
-        List<Pixel> applePixelList = Collections.singletonList(apple.getPixel());
-
-        updatePixelMap.put(KEY_PIXEL_LIST_FREE, freePixelList);
-        updatePixelMap.put(KEY_PIXEL_LIST_SNAKE, snakePixelList);
-        updatePixelMap.put(KEY_PIXEL_LIST_APPLE, applePixelList);
+    private void createUpdatePixelList() {
+        updatePixelList = new ArrayList<>(gameMapPixelList);
     }
 
     private void createSnakeDirection() {
