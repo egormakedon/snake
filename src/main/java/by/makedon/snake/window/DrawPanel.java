@@ -1,5 +1,6 @@
 package by.makedon.snake.window;
 
+import by.makedon.snake.domain.Pixel;
 import by.makedon.snake.manager.GameDataManager;
 import by.makedon.snake.util.Constants;
 
@@ -21,7 +22,39 @@ public class DrawPanel extends JComponent {
 
     @Override
     public void paint(Graphics g) {
-        //TODO
+        GameDataManager.getInstance()
+                .getUpdatePixelList()
+                .forEach(pixel -> drawPixel(g, pixel));
+        GameDataManager.getInstance().flushUpdatePixelList();
+    }
+
+    private void drawPixel(Graphics g, Pixel pixel) {
+        switch (pixel.getPixelType()) {
+            case FREE:
+                drawFreePixel(g, pixel.getX(), pixel.getY());
+                break;
+            case SNAKE_HEAD:
+                drawSnakeHeadPixel(g, pixel.getX(), pixel.getY());
+                break;
+            case SNAKE_BODY:
+                drawSnakeBodyPixel(g, pixel.getX(), pixel.getY());
+                break;
+            case APPLE:
+                drawApplePixel(g, pixel.getX(), pixel.getY());
+                break;
+        }
+    }
+
+    private void drawFreePixel(Graphics g, int x, int y) {
+    }
+
+    private void drawSnakeHeadPixel(Graphics g, int x, int y) {
+    }
+
+    private void drawSnakeBodyPixel(Graphics g, int x, int y) {
+    }
+
+    private void drawApplePixel(Graphics g, int x, int y) {
     }
 
     private static final class CustomKeyListener extends KeyAdapter {
