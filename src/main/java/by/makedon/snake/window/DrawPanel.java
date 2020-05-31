@@ -21,11 +21,12 @@ public class DrawPanel extends JComponent {
     }
 
     @Override
-    public void paint(Graphics g) {
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+
         GameDataManager.getInstance()
-                .getUpdatePixelList()
+                .getGameMapPixelList()
                 .forEach(pixel -> drawPixel(g, pixel));
-        GameDataManager.getInstance().flushUpdatePixelList();
     }
 
     private void drawPixel(Graphics g, Pixel pixel) {

@@ -27,7 +27,6 @@ public final class GameDataManager {
     private List<Pixel> gameMapPixelList;
     private Snake snake;
     private Apple apple;
-    private List<Pixel> updatePixelList;
     private int currentSnakeDirection;
     private int newSnakeDirection;
 
@@ -46,7 +45,6 @@ public final class GameDataManager {
         createGameMapPixelList(width, height);
         createSnake(width, height);
         createApple();
-        createUpdatePixelList();
         createSnakeDirection();
     }
 
@@ -62,16 +60,12 @@ public final class GameDataManager {
                 .findAny();
     }
 
-    public void flushUpdatePixelList() {
-        updatePixelList = new ArrayList<>();
-    }
-
     public void updateSnakeDirection() {
         currentSnakeDirection = newSnakeDirection;
     }
 
-    public List<Pixel> getUpdatePixelList() {
-        return updatePixelList;
+    public List<Pixel> getGameMapPixelList() {
+        return gameMapPixelList;
     }
 
     public int getCurrentSnakeDirection() {
@@ -169,10 +163,6 @@ public final class GameDataManager {
         } else {
             throw new IllegalArgumentException("Snake start position occupy full window size");
         }
-    }
-
-    private void createUpdatePixelList() {
-        updatePixelList = new ArrayList<>(gameMapPixelList);
     }
 
     private void createSnakeDirection() {
