@@ -1,6 +1,6 @@
 package by.makedon.snake.window;
 
-import by.makedon.snake.domain.Pixel;
+import by.makedon.snake.domain.PixelType;
 import by.makedon.snake.manager.GameDataManager;
 import by.makedon.snake.util.Constants;
 
@@ -10,6 +10,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.HashMap;
 import java.util.Map;
+
+import static by.makedon.snake.manager.GameWindowManager.FRAME_SCALE;
 
 /**
  * @author Yahor Makedon
@@ -26,36 +28,28 @@ public class DrawPanel extends JComponent {
 
         GameDataManager.getInstance()
                 .getGameMapPixelList()
-                .forEach(pixel -> drawPixel(g, pixel));
+                .forEach(pixel -> drawPixel(g, pixel.getX(), pixel.getY(), pixel.getPixelType()));
     }
 
-    private void drawPixel(Graphics g, Pixel pixel) {
-        switch (pixel.getPixelType()) {
-            case FREE:
-                drawFreePixel(g, pixel.getX(), pixel.getY());
-                break;
+    private void drawPixel(Graphics g, int x, int y, PixelType pixelType) {
+        g.setColor(Color.BLACK);
+        g.fillRect(x * FRAME_SCALE, y * FRAME_SCALE, FRAME_SCALE, FRAME_SCALE);
+
+        switch (pixelType) {
             case SNAKE_HEAD:
-                drawSnakeHeadPixel(g, pixel.getX(), pixel.getY());
+                g.setColor(Color.WHITE);
                 break;
             case SNAKE_BODY:
-                drawSnakeBodyPixel(g, pixel.getX(), pixel.getY());
+                g.setColor(Color.GREEN);
                 break;
             case APPLE:
-                drawApplePixel(g, pixel.getX(), pixel.getY());
+                g.setColor(Color.RED);
                 break;
         }
-    }
 
-    private void drawFreePixel(Graphics g, int x, int y) {
-    }
-
-    private void drawSnakeHeadPixel(Graphics g, int x, int y) {
-    }
-
-    private void drawSnakeBodyPixel(Graphics g, int x, int y) {
-    }
-
-    private void drawApplePixel(Graphics g, int x, int y) {
+        if (!pixelType.equals(PixelType.FREE)) {
+            g.fillOval(x * FRAME_SCALE, y * FRAME_SCALE, FRAME_SCALE, FRAME_SCALE);
+        }
     }
 
     private static final class CustomKeyListener extends KeyAdapter {
