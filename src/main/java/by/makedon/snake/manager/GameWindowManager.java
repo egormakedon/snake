@@ -37,7 +37,10 @@ public final class GameWindowManager {
             gameWindow.add(drawPanel);
         }
 
-        gameWindow.setSize(width, height);
+        drawPanel.setPreferredSize(width, height);
+
+        gameWindow.pack();
+        gameWindow.setLocationRelativeTo(null);
         gameWindow.showWindow();
 
         repaint();

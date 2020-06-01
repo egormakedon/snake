@@ -22,6 +22,10 @@ public class DrawPanel extends JComponent {
         addKeyListener(new CustomKeyListener());
     }
 
+    public void setPreferredSize(int frameWidth, int frameHeight) {
+        super.setPreferredSize(new Dimension(frameWidth * FRAME_SCALE, frameHeight * FRAME_SCALE));
+    }
+
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
