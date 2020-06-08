@@ -11,6 +11,8 @@ public final class Constants {
     public static final String FRAME_DEFAULT_WIDTH = "frame.default.width";
     public static final String FRAME_DEFAULT_HEIGHT = "frame.default.height";
 
+    public static final String SNAKE_DEFAULT_SPEED = "snake.default.speed";
+
     public static final String SNAKE_START_POSITION = "snake.startPosition";
     public static final String SNAKE_START_DIRECTION = "snake.startDirection";
 

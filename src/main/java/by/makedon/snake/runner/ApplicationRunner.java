@@ -21,10 +21,11 @@ public class ApplicationRunner {
             try {
                 int width = Integer.parseInt(ResourceUtil.getPropertyValue(Constants.FRAME_DEFAULT_WIDTH));
                 int height = Integer.parseInt(ResourceUtil.getPropertyValue(Constants.FRAME_DEFAULT_HEIGHT));
+                int speed = Integer.parseInt(ResourceUtil.getPropertyValue(Constants.SNAKE_DEFAULT_SPEED));
 
                 GameDataManager.getInstance().createData(width, height);
                 GameWindowManager.getInstance().show(width, height);
-                GameActionManager.getInstance().start(1_000);
+                GameActionManager.getInstance().start(speed);
             } catch (Exception e) {
                 logger.error(e.getLocalizedMessage(), e);
             }

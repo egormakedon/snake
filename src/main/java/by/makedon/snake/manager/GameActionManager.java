@@ -14,6 +14,8 @@ public final class GameActionManager implements ActionListener {
 
     private final Timer timer;
     private boolean isPaused;
+    private boolean isGameOver;
+    private boolean isGameWin;
 
     private GameActionManager() {
         timer = new Timer(Constants.EMPTY_INT, this);
@@ -29,13 +31,28 @@ public final class GameActionManager implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        //TODO
+        moveSnake();
+
+        if (isGameOver) {
+            gameOver();
+            return;
+        }
+
+        updateApple();
+
+        if (isGameWin) {
+            gameWin();
+            return;
+        }
+
         GameDataManager.getInstance().updateSnakeDirection();
         GameWindowManager.getInstance().repaint();
     }
 
     public void start(int speed) {
         isPaused = false;
+        isGameOver = false;
+        isGameWin = false;
 
         timer.setDelay(speed);
         timer.start();
@@ -49,5 +66,21 @@ public final class GameActionManager implements ActionListener {
         }
 
         isPaused = !isPaused;
+    }
+
+    private void moveSnake() {
+        //TODO
+    }
+
+    private void updateApple() {
+        //TODO
+    }
+
+    private void gameOver() {
+        //TODO
+    }
+
+    private void gameWin() {
+        //TODO
     }
 }

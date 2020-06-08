@@ -68,6 +68,14 @@ public final class GameDataManager {
         return gameMapPixelList;
     }
 
+    public List<Pixel> getSnakePixelList() {
+        return snake.getPixelList();
+    }
+
+    public Apple getApple() {
+        return apple;
+    }
+
     public int getCurrentSnakeDirection() {
         return currentSnakeDirection;
     }
