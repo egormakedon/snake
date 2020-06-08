@@ -26,6 +26,10 @@ public final class Constants {
 
     public static final String VERTICAL_SLASH = "\\|";
 
+    public static final int PAUSE = -1;
+
+    public static final int EMPTY_INT = Integer.MIN_VALUE;
+
     private Constants() {
     }
 }

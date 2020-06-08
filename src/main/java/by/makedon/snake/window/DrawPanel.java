@@ -1,6 +1,7 @@
 package by.makedon.snake.window;
 
 import by.makedon.snake.domain.PixelType;
+import by.makedon.snake.manager.GameActionManager;
 import by.makedon.snake.manager.GameDataManager;
 import by.makedon.snake.util.Constants;
 
@@ -60,7 +61,7 @@ public class DrawPanel extends JComponent {
         private static final Map<Integer, Integer> map;
 
         static {
-            map = new HashMap<>(8);
+            map = new HashMap<>(10);
 
             map.put(KeyEvent.VK_W, Constants.SNAKE_DIRECTION_UP);
             map.put(KeyEvent.VK_UP, Constants.SNAKE_DIRECTION_UP);
@@ -73,6 +74,9 @@ public class DrawPanel extends JComponent {
 
             map.put(KeyEvent.VK_D, Constants.SNAKE_DIRECTION_RIGHT);
             map.put(KeyEvent.VK_RIGHT, Constants.SNAKE_DIRECTION_RIGHT);
+
+            map.put(KeyEvent.VK_ESCAPE, Constants.PAUSE);
+            map.put(KeyEvent.VK_SPACE, Constants.PAUSE);
         }
 
         private CustomKeyListener() {
@@ -80,18 +84,25 @@ public class DrawPanel extends JComponent {
 
         @Override
         public void keyPressed(KeyEvent e) {
-            int oldDirection = GameDataManager.getInstance().getCurrentSnakeDirection();
-            int newDirection = map.getOrDefault(e.getKeyCode(), oldDirection);
+            int value = map.getOrDefault(e.getKeyCode(), Constants.EMPTY_INT);
 
-            if (oldDirection != newDirection) {
-                if (newDirection == Constants.SNAKE_DIRECTION_UP && oldDirection != Constants.SNAKE_DIRECTION_DOWN) {
-                    GameDataManager.getInstance().setNewSnakeDirection(newDirection);
-                } else if (newDirection == Constants.SNAKE_DIRECTION_DOWN && oldDirection != Constants.SNAKE_DIRECTION_UP) {
-                    GameDataManager.getInstance().setNewSnakeDirection(newDirection);
-                } else if (newDirection == Constants.SNAKE_DIRECTION_LEFT && oldDirection != Constants.SNAKE_DIRECTION_RIGHT) {
-                    GameDataManager.getInstance().setNewSnakeDirection(newDirection);
-                } else if (newDirection == Constants.SNAKE_DIRECTION_RIGHT && oldDirection != Constants.SNAKE_DIRECTION_LEFT) {
-                    GameDataManager.getInstance().setNewSnakeDirection(newDirection);
+            if (value != Constants.EMPTY_INT) {
+                if (value == Constants.PAUSE) {
+                    GameActionManager.getInstance().pause();
+                } else {
+                    int currentSnakeDirection = GameDataManager.getInstance().getCurrentSnakeDirection();
+
+                    if (value != currentSnakeDirection) {
+                        if (value == Constants.SNAKE_DIRECTION_UP && currentSnakeDirection != Constants.SNAKE_DIRECTION_DOWN) {
+                            GameDataManager.getInstance().setNewSnakeDirection(value);
+                        } else if (value == Constants.SNAKE_DIRECTION_DOWN && currentSnakeDirection != Constants.SNAKE_DIRECTION_UP) {
+                            GameDataManager.getInstance().setNewSnakeDirection(value);
+                        } else if (value == Constants.SNAKE_DIRECTION_LEFT && currentSnakeDirection != Constants.SNAKE_DIRECTION_RIGHT) {
+                            GameDataManager.getInstance().setNewSnakeDirection(value);
+                        } else if (value == Constants.SNAKE_DIRECTION_RIGHT && currentSnakeDirection != Constants.SNAKE_DIRECTION_LEFT) {
+                            GameDataManager.getInstance().setNewSnakeDirection(value);
+                        }
+                    }
                 }
             }
         }

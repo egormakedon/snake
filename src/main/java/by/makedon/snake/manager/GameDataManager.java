@@ -92,7 +92,7 @@ public final class GameDataManager {
 
         Validator.validateSnakeStartDirection(snakeStartDirectionString);
 
-        int snakeStartDirection = Integer.MIN_VALUE;
+        int snakeStartDirection = Constants.EMPTY_INT;
         switch (snakeStartDirectionString) {
             case Constants.SNAKE_START_DIRECTION_U:
                 snakeStartDirection = Constants.SNAKE_DIRECTION_UP;
