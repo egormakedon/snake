@@ -24,6 +24,9 @@ public final class GameDataManager {
         snakeStartDirection = loadSnakeStartDirection();
     }
 
+    private int width;
+    private int height;
+
     private List<Pixel> gameMapPixelList;
     private Snake snake;
     private Apple apple;
@@ -42,8 +45,11 @@ public final class GameDataManager {
     }
 
     public void createData(int width, int height) {
-        createGameMapPixelList(width, height);
-        createSnake(width, height);
+        this.width = width;
+        this.height = height;
+
+        createGameMapPixelList();
+        createSnake();
         createApple();
         createSnakeDirection();
     }
@@ -62,6 +68,14 @@ public final class GameDataManager {
 
     public void updateSnakeDirection() {
         currentSnakeDirection = newSnakeDirection;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
     }
 
     public List<Pixel> getGameMapPixelList() {
@@ -119,7 +133,7 @@ public final class GameDataManager {
         return snakeStartDirection;
     }
 
-    private void createGameMapPixelList(int width, int height) {
+    private void createGameMapPixelList() {
         gameMapPixelList = new ArrayList<>(width * height);
 
         for (int i = 0; i < width; i++) {
@@ -131,7 +145,7 @@ public final class GameDataManager {
         Collections.shuffle(gameMapPixelList);
     }
 
-    private void createSnake(int width, int height) {
+    private void createSnake() {
         if (snake == null) {
             snake = new Snake();
         }
