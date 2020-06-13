@@ -106,11 +106,13 @@ public final class GameActionManager implements ActionListener {
     }
 
     private void gameOver() {
-        //TODO
+        timer.stop();
+        GameWindowManager.getInstance().reset("Game Over!");
     }
 
     private void gameWin() {
-        //TODO
+        timer.stop();
+        GameWindowManager.getInstance().reset("You win!");
     }
 
     @SuppressWarnings("OptionalGetWithoutIsPresent")

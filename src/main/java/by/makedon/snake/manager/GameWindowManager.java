@@ -5,6 +5,8 @@ import by.makedon.snake.util.ResourceUtil;
 import by.makedon.snake.window.DrawPanel;
 import by.makedon.snake.window.GameWindow;
 
+import javax.swing.*;
+
 /**
  * @author Yahor Makedon
  */
@@ -52,5 +54,24 @@ public final class GameWindowManager {
 
     public void repaint() {
         drawPanel.repaint();
+    }
+
+    public void reset(String message) {
+        JOptionPane.showMessageDialog(null, message);
+
+        hide();
+
+        int input = JOptionPane.showConfirmDialog(null, "Do you want to continue?");
+        if (input == 0) {
+            int width = Integer.parseInt(ResourceUtil.getPropertyValue(Constants.FRAME_DEFAULT_WIDTH));
+            int height = Integer.parseInt(ResourceUtil.getPropertyValue(Constants.FRAME_DEFAULT_HEIGHT));
+            int speed = Integer.parseInt(ResourceUtil.getPropertyValue(Constants.SNAKE_DEFAULT_SPEED));
+
+            GameDataManager.getInstance().createData(width, height);
+            show(width, height);
+            GameActionManager.getInstance().start(speed);
+        } else {
+            System.exit(0);
+        }
     }
 }
