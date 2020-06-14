@@ -50,7 +50,6 @@ public final class GameActionManager implements ActionListener {
             return;
         }
 
-        GameDataManager.getInstance().updateSnakeDirection();
         GameWindowManager.getInstance().repaint();
     }
 
@@ -119,6 +118,8 @@ public final class GameActionManager implements ActionListener {
     private Pixel getNextPixel(Pixel snakeHeadPixel) {
         int width = GameDataManager.getInstance().getWidth();
         int height = GameDataManager.getInstance().getHeight();
+
+        GameDataManager.getInstance().updateSnakeDirection();
         int currentSnakeDirection = GameDataManager.getInstance().getCurrentSnakeDirection();
 
         int x = snakeHeadPixel.getX();
