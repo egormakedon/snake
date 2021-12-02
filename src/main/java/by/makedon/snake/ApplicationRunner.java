@@ -1,4 +1,4 @@
-package by.makedon.snake.runner;
+package by.makedon.snake;
 
 import by.makedon.snake.manager.GameActionManager;
 import by.makedon.snake.manager.GameDataManager;
